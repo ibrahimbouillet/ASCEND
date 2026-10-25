@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="ASCEND — a local, evidence-led view of your project."
+    />
+    <title>ASCEND · Project intelligence</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23232925'/%3E%3Cpath d='M7 25 16 8l9 17M12 19h8' fill='none' stroke='%23f5f1e9' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to project intelligence</a>
+    <aside class="sidebar" aria-label="ASCEND navigation">
+      <a class="wordmark" href="#overview" aria-label="ASCEND overview"
+        ><svg viewBox="0 0 28 28" aria-hidden="true">
+          <path d="M3 23 14 4l11 19M8 18h12M12 23h4" /></svg
+        >ASCEND<span class="version">v0.1</span></a
+      >
+      <div class="workspace-label">PROJECT WORKSPACE</div>
+      <div class="workspace">
+        <span class="workspace-icon" id="project-initials">AS</span>
+        <div>
+          <strong id="sidebar-project">Project</strong
+          ><span>Intelligence workspace</span>
+        </div>
+        <span class="local-dot" title="Local report"></span>
+      </div>
+      <nav class="nav-list" aria-label="Report sections">
+        <a class="active" href="#overview"
+          ><span aria-hidden="true">◫</span>Overview<span
+            class="nav-arrow"
+            aria-hidden="true"
+            >↗</span
+          ></a
+        >
+        <a href="#audit"
+          ><span aria-hidden="true">◎</span>Project audit<span
+            class="nav-count"
+            id="audit-count"
+            aria-hidden="true"
+            >0</span
+          ></a
+        >
+        <a href="#knowledge"><span aria-hidden="true">⌘</span>Knowledge map</a>
+        <a href="#actions"><span aria-hidden="true">↗</span>Action plan</a>
+        <a href="#benchmarks"><span aria-hidden="true">≋</span>Comparisons</a>
+        <a href="#evolution"><span aria-hidden="true">⌁</span>Evolution</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-state">
+          <span class="local-dot"></span>Local · read only
+        </div>
+        <p>Understand.<br />Strategize.<br /><em>Evolve.</em></p>
+        <span class="sidebar-caption">Intelligence grounded in evidence.</span>
+      </div>
+    </aside>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <span class="breadcrumb">Workspace</span
+          ><span class="breadcrumb-separator">/</span
+          ><span>Project intelligence</span>
+        </div>
+        <div class="topbar-status">
+          <span class="local-dot"></span>Local report<span
+            class="topbar-divider"
+          ></span
+          ><span id="capture-date">Snapshot</span>
+        </div>
+      </header>
+      <main id="main">
+        <section
+          id="simulation-notice"
+          class="simulation-banner"
+          hidden
+          aria-label="Simulation notice"
+        >
+          <span class="simulation-symbol" aria-hidden="true">◈</span>
+          <div>
+            <strong>Simulated project · demonstration data</strong>
+            <p>
+              This workspace uses fictional evidence to test ASCEND. It does not
+              demonstrate sales growth or business results.
+            </p>
+          </div>
+          <span class="demo-label">SANDBOX</span>
+        </section>
+        <section
+          id="overview"
+          class="section overview-section"
+          aria-labelledby="overview-title"
+        >
+          <div class="section-eyebrow">
+            <span class="tiny-line"></span>THE PROJECT, IN PERSPECTIVE
+          </div>
+          <div class="intro-row">
+            <div>
+              <h1 id="overview-title">Project overview</h1>
+              <p class="intro-description">
+                A clear picture. An informed next step.
+              </p>
+            </div>
+            <span class="snapshot-pill"
+              ><span class="local-dot"></span
+              ><span id="baseline-label">Reference snapshot</span></span
+            >
+          </div>
+          <div class="project-hero">
+            <div class="hero-content">
+              <span class="hero-kicker" id="project-domain">PROJECT</span>
+              <h2 id="project-name">Your project</h2>
+              <p id="project-summary"></p>
+              <div class="objective">
+                <span aria-hidden="true">↗</span>
+                <div>
+                  <span class="mini-label">CURRENT OBJECTIVE</span
+                  ><strong id="project-objective"></strong>
+                </div>
+              </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="orbital orbital-one"></div>
+              <div class="orbital orbital-two"></div>
+              <div class="orbital orbital-three"></div>
+              <div class="orbit-node node-one"></div>
+              <div class="orbit-node node-two"></div>
+              <div class="orbit-node node-three"></div>
+              <div class="art-axis"></div>
+              <span class="art-annotation">CLARITY IS THE FIRST MOVE.</span
+              ><span class="art-coordinate">01 / UNDERSTAND</span>
+            </div>
+          </div>
+          <div
+            id="metrics"
+            class="metric-grid"
+            aria-label="Recorded project metrics"
+          ></div>
+          <div class="overview-bottom">
+            <div class="panel coverage-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-eyebrow">KNOW WHAT YOU KNOW</span>
+                  <h3>Analysis coverage</h3>
+                </div>
+                <span id="coverage-summary" class="quiet-badge"></span>
+              </div>
+              <div id="coverage-list"></div>
+            </div>
+            <div class="panel context-panel">
+              <span class="section-eyebrow">THE OPERATING CONTEXT</span>
+              <h3>Constraints shape the strategy.</h3>
+              <p>
+                Every recommendation must fit the resources and limits recorded
+                here.
+              </p>
+              <ul id="constraints" class="constraint-list"></ul>
+            </div>
+          </div>
+        </section>
+        <section id="audit" class="section" aria-labelledby="audit-title">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">02 / EVALUATE</span>
+              <h2 id="audit-title">
+                The evidence-led audit<span class="heading-dot">.</span>
+              </h2>
+              <p>
+                What is observed, what is suspected, and what still needs
+                checking.
+              </p>
+            </div>
+            <span class="quiet-badge">Priority ≠ certainty</span>
+          </div>
+          <div class="audit-toolbar">
+            <div
+              class="filter-group"
+              role="group"
+              aria-label="Filter audit by priority"
+            >
+              <button
+                type="button"
+                class="filter active"
+                data-filter="all"
+                aria-pressed="true"
+              >
+                All findings</button
+              ><button
+                type="button"
+                class="filter"
+                data-filter="red"
+                aria-pressed="false"
+              >
+                <span class="status-dot red"></span>Urgent</button
+              ><button
+                type="button"
+                class="filter"
+                data-filter="yellow"
+                aria-pressed="false"
+              >
+                <span class="status-dot yellow"></span>Improve</button
+              ><button
+                type="button"
+                class="filter"
+                data-filter="green"
+                aria-pressed="false"
+              >
+                <span class="status-dot green"></span>Working</button
+              ><button
+                type="button"
+                class="filter"
+                data-filter="grey"
+                aria-pressed="false"
+              >
+                <span class="status-dot grey"></span>Unknown
+              </button>
+            </div>
+            <span
+              id="findings-count"
+              class="count-label"
+              aria-live="polite"
+            ></span>
+          </div>
+          <div id="findings" class="findings-list"></div>
+        </section>
+        <section
+          id="knowledge"
+          class="section"
+          aria-labelledby="knowledge-title"
+        >
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">03 / CONNECT</span>
+              <h2 id="knowledge-title">
+                Nothing exists in isolation<span class="heading-dot">.</span>
+              </h2>
+              <p>
+                Follow the links from evidence to observations and proposed
+                actions. This focused graph shows sources, metrics, findings,
+                and actions; benchmark links appear in Comparisons below.
+              </p>
+            </div>
+          </div>
+          <div class="panel graph-panel">
+            <div class="graph-legend">
+              <span><i class="legend-source"></i>Sources</span
+              ><span><i class="legend-metric"></i>Metrics</span
+              ><span><i class="legend-finding"></i>Findings</span
+              ><span><i class="legend-action"></i>Actions</span
+              ><small>Select a node to inspect its visible relationships</small>
+            </div>
+            <div class="graph-layout">
+              <div
+                id="graph-container"
+                class="graph-canvas"
+                tabindex="0"
+                aria-label="Scrollable knowledge graph"
+              ></div>
+              <aside id="node-detail" class="node-detail" aria-live="polite">
+                <span class="section-eyebrow">CONNECTED KNOWLEDGE</span>
+                <h3>A traceable chain of reasoning.</h3>
+                <p>
+                  Select any node to explore its evidence and relationships.
+                </p>
+              </aside>
+            </div>
+          </div>
+        </section>
+        <section id="actions" class="section" aria-labelledby="actions-title">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">04 / STRATEGIZE</span>
+              <h2 id="actions-title">
+                A deliberate next move<span class="heading-dot">.</span>
+              </h2>
+              <p>
+                Proposals with a rationale, a cost, and a way to check the
+                outcome.
+              </p>
+            </div>
+            <span class="quiet-badge"
+              >Inspection only · no actions run here</span
+            >
+          </div>
+          <div id="actions-list" class="actions-grid"></div>
+        </section>
+        <section
+          id="benchmarks"
+          class="section"
+          aria-labelledby="benchmarks-title"
+        >
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">05 / COMPARE</span>
+              <h2 id="benchmarks-title">
+                Perspective, with context<span class="heading-dot">.</span>
+              </h2>
+              <p>
+                Comparisons inform a decision. Their relevance and limits stay
+                visible.
+              </p>
+            </div>
+          </div>
+          <div id="benchmarks-list" class="benchmarks-grid"></div>
+        </section>
+        <section
+          id="evolution"
+          class="section"
+          aria-labelledby="evolution-title"
+        >
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">06 / EVOLVE</span>
+              <h2 id="evolution-title">
+                Progress needs a reference<span class="heading-dot">.</span>
+              </h2>
+              <p>
+                Immutable snapshots preserve what was known at each point in
+                time.
+              </p>
+            </div>
+          </div>
+          <div class="evolution-grid">
+            <div class="panel chart-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-eyebrow">RECORDED SNAPSHOTS</span>
+                  <h3>Measured evolution</h3>
+                </div>
+                <label class="metric-select-label"
+                  ><span class="sr-only">Choose metric for evolution chart</span
+                  ><select id="evolution-metric"></select
+                ></label>
+              </div>
+              <div id="evolution-chart" aria-live="polite"></div>
+              <p class="chart-note">
+                Dates refer to snapshot captures. A comparison is shown only
+                when its measurement basis is compatible.
+              </p>
+            </div>
+            <div class="panel history-panel">
+              <span class="section-eyebrow">THE REFERENCE TRAIL</span>
+              <h3>Snapshot history</h3>
+              <ol id="history-list" class="history-list"></ol>
+            </div>
+          </div>
+          <div id="changes-list" class="changes-panel"></div>
+        </section>
+        <footer class="report-footer">
+          <div class="footer-brand">
+            ASCEND<span>Understand. Strategize. Evolve.</span>
+          </div>
+          <p>
+            Generated <span id="generated-at"></span> · Local, read-only report
+          </p>
+          <p>Evidence is traceable. Hypotheses remain hypotheses.</p>
+        </footer>
+      </main>
+    </div>
+    {{ASCEND_DATA}}
+    <script src="app.js" defer></script>
+  </body>
+</html>

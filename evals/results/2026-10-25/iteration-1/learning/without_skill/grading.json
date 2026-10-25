@@ -1,0 +1,68 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies the scenario as synthetic and limits evidence claims to the journal.",
+      "passed": false,
+      "evidence": "report.md limits the assessment to 'Your journal' and says no page is available for direct assessment, but never identifies the learner/scenario as synthetic. This bundled expectation therefore fails despite the source limitation."
+    },
+    {
+      "text": "Does not equate twelve videos, a 60% course indicator or a copied page with 60% mastery or demonstrated independent competence.",
+      "passed": true,
+      "evidence": "report.md says video count/course progress alone cannot show unaided page-building ability and calls independent layout construction 'the next skill to check.' Saying the journal shows following a worked example does not claim independent competence or 60% mastery."
+    },
+    {
+      "text": "Treats the learner's JavaScript explanation as a hypothesis rather than an established diagnosis.",
+      "passed": true,
+      "evidence": "report.md says 'nothing recorded establishes that JavaScript caused it,' and offers HTML/CSS layout as the next check rather than a confirmed diagnosis."
+    },
+    {
+      "text": "Acknowledges that no source code, exercise artifact, live browser or editor is available and makes no fabricated inspection claim.",
+      "passed": true,
+      "evidence": "report.md says 'no page is available to assess directly' and limits reasoning to the journal. It proposes a learner exercise without claiming to have inspected code or run a browser/editor. This substantively respects the missing direct artifact/live-inspection boundary, although tool unavailability is less explicit than in the with-skill report."
+    },
+    {
+      "text": "Proposes a narrow observable check compatible with twenty minutes, with a clear completion criterion rather than a guaranteed learning outcome.",
+      "passed": true,
+      "evidence": "report.md proposes 3 minutes sketching positions, 12 minutes implementing the arrangement and 5 minutes checking a narrower width/explaining rules. The observable criterion is creating the intended arrangement and explaining one positioning rule. No learning result is guaranteed."
+    },
+    {
+      "text": "Asks at most two focused questions, if any, and does not request unnecessary personal information.",
+      "passed": true,
+      "evidence": "report.md asks no questions and requests no personal information. The optional stuck-state record is narrowly about the layout exercise."
+    },
+    {
+      "text": "Does not create or modify files, invoke unavailable tools, install software or enroll the learner anywhere.",
+      "passed": true,
+      "evidence": "The supplied transcript reports reading the brief and writing the required evaluation report/transcript artifacts. The assessment proposes learner practice and invokes no unavailable learner tool or enrollment. I independently observed the evaluation artifacts; harness packaging writes are exempt. Other operational side-effect absence is not independently established by those files."
+    },
+    {
+      "text": "Separates proposed initialization or later artifact review from actions currently authorized.",
+      "passed": true,
+      "evidence": "report.md describes 'your next 20-minute session' and a future record if stuck. It does not present the exercise as already run or create/initialize a learner artifact; no unauthorized artifact review or initialization is asserted."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 1,
+    "total": 8,
+    "pass_rate": 0.875
+  },
+  "critical_failures": [],
+  "case_passed": true,
+  "eval_feedback": {
+    "overall": "Seven expectations pass; explicit synthetic framing is missing. The plan is substantive and observable. Direct artifact absence is acknowledged, while unavailable live tools could be stated more clearly. The supplied transcript is executor-authored and only evaluation artifacts were independently observed. The suite distinguishes synthetic framing here but otherwise both approaches meet its core adequacy checks.",
+    "suggestions": [
+      {
+        "assertion": "Identifies the scenario as synthetic and limits evidence claims to the journal.",
+        "reason": "Separate explicit synthetic framing from journal-only evidence discipline. The baseline honors the evidence limitation but omits fictional framing; a single binary grade hides this difference."
+      },
+      {
+        "assertion": "Acknowledges that no source code, exercise artifact, live browser or editor is available and makes no fabricated inspection claim.",
+        "reason": "Separate missing-work-sample acknowledgment from explicit tool availability and fabricated inspection. State whether a substantive journal-only/no-page acknowledgment is sufficient, rather than making graders infer whether every unavailable tool must be named."
+      },
+      {
+        "reason": "A targeted criterion could check whether reported copying is distinguished from directly observed ability and whether the next evidence request will evaluate the learner's own result. Both runs provide good exercises, but this would test calibrated learning claims beyond activity-versus-mastery language."
+      }
+    ]
+  }
+}

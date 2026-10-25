@@ -1,0 +1,12 @@
+{
+  "cli_version": "0.163.0-alpha.11.2",
+  "exit_code": 0,
+  "status": "partial_execution_policy_blocked",
+  "skill_recognized": true,
+  "evidence": "Invocation resolved ASCEND supporting workflow reference; read commands were rejected by execution policy. The final report disclosed that no project evidence was read.",
+  "assessment_completed": false,
+  "sandbox": "read-only",
+  "user_config_loaded": false,
+  "real_accounts_used": false,
+  "claude_cli": "not found on PATH; not run"
+}

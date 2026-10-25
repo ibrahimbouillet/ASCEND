@@ -1,0 +1,16 @@
+Atelier Solstice needs a clearer view of its costs and purchase journey before choosing improvements. This is a fictional, preliminary assessment based solely on the supplied brief; no operational claim has been independently verified.
+
+What is known from the brief:
+- The owner reports no sales, €90 available monthly and about four hours weekly. The Shopify payment is a concern, but its amount, due date and available cash are unknown.
+- For 11–17 October 2026, seven complete Europe/Paris days, the supplied figures are 42 store sessions, zero recorded orders, three Instagram videos and 180 video views. These figures do not establish why orders are absent, whether the visits came from Instagram, or how many people saw the videos.
+- The excerpt lists eight products priced €24–€88 and represents size options. The Dawn tee description is sparse. Measurements, materials, photographs, stock, shipping, dispatch and returns are not supplied; that does not prove they are absent from the actual storefront.
+- The Indigo Workshop card is fabricated and has no outcome data. It can suggest inspection questions, but supplies no evidence that its features improve sales. External benchmarking remains unperformed.
+
+The next checks, in order:
+1. Clarify the immediate commitment: subscription invoice, renewal date, other recurring costs and a simple cash ledger. Then estimate one representative product's material, packaging, transaction and shipping costs, plus production time and capacity. This establishes affordability and basic economics; no spending or subscription change is proposed yet.
+2. Map the measured purchase journey using a consistent reporting window: traffic sources, profile visits, link clicks, product views, checkout starts and payment errors, with metric definitions and bot filtering where available. Instagram being the only channel is an owner claim, not verified attribution. The small sample cannot distinguish a reach, offer or checkout problem.
+3. Review one product page and, under later authorization, walk through checkout without placing an order. Check sizing, materials, images, availability, delivery costs/timing, returns and contact information. Record what is actually visible before proposing edits.
+
+These checks can begin with owner-supplied records and one product, in short sessions within the reported time allowance. Their purpose is to choose the next useful action; neither more videos nor a rewritten page would itself prove commercial progress.
+
+Proposed initialization for later approval: create only a small local ASCEND workspace in an agreed project location, containing a dated immutable baseline, a source/coverage index, the supplied metrics with dates and units, evidence-linked findings and a short prioritized list of proposed checks. Retain aggregate data only. All implementation actions would remain proposed. No workspace, dashboard, storefront changes, drafts, account connections, purchases, commits or server have been created for this assessment.

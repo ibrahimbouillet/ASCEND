@@ -1,0 +1,502 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-25T10:00:00Z",
+  "project": {
+    "id": "atelier-solstice",
+    "name": "Atelier Solstice",
+    "domain": "Artisan clothing ecommerce",
+    "summary": "A fictional owner-operated clothing brand making garments at home and selling through a simulated Shopify storefront.",
+    "objective": "Understand why the store has no recorded orders and identify affordable, testable improvements.",
+    "constraints": [
+      "SIMULATION ONLY: no real business, customer data, account, connector, approval, revenue or external research is represented.",
+      "The fictional owner reports €90 available per month for the project; this is an unverified scenario input.",
+      "The owner reports that the next Shopify subscription payment may be difficult to cover; its amount and due date are unknown.",
+      "The owner works alone, makes garments at home and can allocate four hours per week to improvements.",
+      "Instagram is the only reported acquisition channel.",
+      "Real storefront access, Shopify access, Instagram access and checkout event access are unavailable.",
+      "SIMULATION: one fictional approval permits creation of a local Dawn tee copy draft only. No store update, purchase, account change, image generation or publication is authorized."
+    ],
+    "brand": {
+      "accent": "#B75B40"
+    },
+    "simulation": true
+  },
+  "sources": [
+    {
+      "id": "src-catalogue",
+      "title": "Simulated catalogue excerpt",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/catalogue/2026-10-25",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "available",
+      "note": "Eight fictional products: S01 Dawn tee €32; S02 Clay tee €34; S03 Studio long-sleeve €46; S04 Dune vest €65; S05 Ember hoodie €79; S06 Linen overshirt €88; S07 Orbit tote €24; S08 Solstice skirt €72. Prices, products and names are scenario data. Sizes are shown, but no size measurements are supplied. Unit costs and sellable quantities are not supplied."
+    },
+    {
+      "id": "src-storefront",
+      "title": "Simulated storefront reading",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/storefront/2026-10-25",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "available",
+      "note": "The supplied text has a home page, eight product cards and a cart. Dawn tee copy reads: 'Handmade tee. Available now.' The supplied excerpt contains no delivery price, dispatch window, returns explanation or contact page. Omission from this excerpt does not establish omission from the full real storefront; no storefront was accessed."
+    },
+    {
+      "id": "src-shop",
+      "title": "Simulated store analytics export",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/store-analytics/2026-10-18_2026-10-24",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "available",
+      "note": "Complete seven-day scenario window, 2026-10-18 through 2026-10-24 inclusive, Europe/Paris reporting days. Sessions 67; recorded orders 0. Same scenario definitions as the previous window. Traffic attribution, product page events, checkout starts, bots and cross-device deduplication remain unavailable."
+    },
+    {
+      "id": "src-instagram",
+      "title": "Simulated Instagram summary",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/instagram/2026-10-18_2026-10-24",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "available",
+      "note": "Complete seven-day scenario window, 2026-10-18 through 2026-10-24 inclusive, Europe/Paris reporting days. Four published videos, 410 total video views. Same scenario definitions as the previous window. Views remain non-unique and unattributed; no claim about sales impact can be inferred."
+    },
+    {
+      "id": "src-owner",
+      "title": "Simulated owner interview",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/interview/2026-10-18",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "available",
+      "note": "The fictional owner reports €90 available monthly, four hours weekly, handmade production at home and Instagram as the only channel. They report concern about the next subscription payment. No verified cash ledger, payment schedule, margin figures or production capacity records are supplied. Follow-up: the owner has not supplied the requested subscription date or amount, cost records or production capacity."
+    },
+    {
+      "id": "src-checkout",
+      "title": "Real checkout and connector access",
+      "kind": "connector",
+      "locator": "unavailable://no-shopify-or-instagram-connection",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "unavailable",
+      "note": "No account was connected. Checkout functionality, payment methods, error rates and actual store configuration were not inspected."
+    },
+    {
+      "id": "src-comparator",
+      "title": "Synthetic comparison card",
+      "kind": "simulation",
+      "locator": "simulation://comparison-card/indigo-workshop",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "available",
+      "note": "Invented comparator for exercising comparison structure only: 'Indigo Workshop' displays garment measurements, a dispatch estimate and a visible contact link. It has no measured traffic, orders, revenue, conversion or proven outcome. It is not an empirical benchmark."
+    },
+    {
+      "id": "src-benchmarks",
+      "title": "Real external market benchmarks",
+      "kind": "web",
+      "locator": "unavailable://no-live-benchmark-research",
+      "captured_at": "2026-10-25T10:00:00Z",
+      "status": "unavailable",
+      "note": "No live market research or comparable real business data was collected. No industry conversion rate, successful-brand causal claim or external performance target is available."
+    },
+    {
+      "id": "src-copy-approval",
+      "title": "Fictional approval record",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/approvals/copy-draft-001",
+      "captured_at": "2026-10-22T09:00:00Z",
+      "status": "available",
+      "note": "SIMULATED APPROVAL, NOT A REAL USER INSTRUCTION: 'Prepare a local Dawn tee description draft using these supplied facts: cotton jersey, relaxed fit, handmade at home. You may create that draft only. Do not publish or edit Shopify.' The fictional owner supplied no garment measurements or dispatch estimate."
+    },
+    {
+      "id": "src-copy-artifact",
+      "title": "Fictional local copy draft artifact",
+      "kind": "simulation",
+      "locator": "simulation://atelier-solstice/artifacts/dawn-tee-copy-v1",
+      "captured_at": "2026-10-22T09:30:00Z",
+      "status": "available",
+      "note": "SIMULATED ARTIFACT, NOT A REAL FILE OR LIVE STORE CHANGE. Artifact content: 'Dawn tee — €32. Cotton jersey with a relaxed fit, handmade at home. Please contact the maker for garment measurements before choosing a size.' The artifact exists only in this supplied simulation record. Publication, owner acceptance, visitor exposure and sales impact are not recorded."
+    }
+  ],
+  "coverage": [
+    {
+      "area": "Catalogue and product presentation",
+      "status": "partial",
+      "source_ids": [
+        "src-catalogue",
+        "src-storefront"
+      ],
+      "note": "All eight supplied product names and prices were examined. Actual photographs, garment quality, measurements, stock and full pages were not available."
+    },
+    {
+      "area": "Store traffic and orders",
+      "status": "examined",
+      "source_ids": [
+        "src-shop"
+      ],
+      "note": "Supplied aggregate values for one complete seven-day window were examined. Raw event accuracy is not independently verified."
+    },
+    {
+      "area": "Instagram activity",
+      "status": "partial",
+      "source_ids": [
+        "src-instagram"
+      ],
+      "note": "Supplied views and publication counts were examined; no actual videos, audience analysis or attribution were available."
+    },
+    {
+      "area": "Owner constraints",
+      "status": "partial",
+      "source_ids": [
+        "src-owner"
+      ],
+      "note": "Scenario interview only; cash, subscription amount, due date and margins remain unverified."
+    },
+    {
+      "area": "Checkout and payment flow",
+      "status": "unavailable",
+      "source_ids": [
+        "src-checkout"
+      ],
+      "note": "No real connector or browser session; no checkout test was performed."
+    },
+    {
+      "area": "External comparison",
+      "status": "unavailable",
+      "source_ids": [
+        "src-benchmarks",
+        "src-comparator"
+      ],
+      "note": "No real benchmark is available. The synthetic comparison card exercises a method and cannot prove what produces success."
+    },
+    {
+      "area": "Existing source-control state",
+      "status": "not_applicable",
+      "source_ids": [],
+      "note": "The supplied project is a simulated service-based storefront. No repository state or Git commit can stand in for the store state."
+    },
+    {
+      "area": "Authorized copy draft",
+      "status": "examined",
+      "source_ids": [
+        "src-copy-approval",
+        "src-copy-artifact"
+      ],
+      "note": "The fictional approval and draft artifact were examined. Only draft creation is evidenced; no live store modification or benefit is evidenced."
+    }
+  ],
+  "metrics": [
+    {
+      "id": "m-sessions",
+      "label": "Store sessions",
+      "value": 67,
+      "unit": "sessions",
+      "period_start": "2026-10-18",
+      "period_end": "2026-10-24",
+      "source_ids": [
+        "src-shop"
+      ],
+      "comparability_key": "shop.sessions.v1|Europe-Paris|all-supplied-sessions|7-complete-days"
+    },
+    {
+      "id": "m-orders",
+      "label": "Recorded orders",
+      "value": 0,
+      "unit": "orders",
+      "period_start": "2026-10-18",
+      "period_end": "2026-10-24",
+      "source_ids": [
+        "src-shop"
+      ],
+      "comparability_key": "shop.orders.v1|Europe-Paris|recorded-orders|7-complete-days"
+    },
+    {
+      "id": "m-instagram-views",
+      "label": "Instagram video views",
+      "value": 410,
+      "unit": "views",
+      "period_start": "2026-10-18",
+      "period_end": "2026-10-24",
+      "source_ids": [
+        "src-instagram"
+      ],
+      "comparability_key": "instagram.video-views.v1|Europe-Paris|all-supplied-views|7-complete-days"
+    },
+    {
+      "id": "m-posts",
+      "label": "Published Instagram videos",
+      "value": 4,
+      "unit": "videos",
+      "period_start": "2026-10-18",
+      "period_end": "2026-10-24",
+      "source_ids": [
+        "src-instagram"
+      ],
+      "comparability_key": "instagram.published-videos.v1|Europe-Paris|7-complete-days"
+    },
+    {
+      "id": "m-checkouts",
+      "label": "Checkout starts",
+      "value": null,
+      "unit": "checkout starts",
+      "period_start": "2026-10-18",
+      "period_end": "2026-10-24",
+      "source_ids": [
+        "src-checkout"
+      ],
+      "comparability_key": "shop.checkout-starts.v1|Europe-Paris|7-complete-days"
+    }
+  ],
+  "findings": [
+    {
+      "id": "f-catalogue",
+      "title": "Eight products are represented",
+      "detail": "The supplied catalogue contains eight named products with prices. This establishes the represented assortment only, not demand, product quality, margin or storefront completeness.",
+      "kind": "observed",
+      "severity": "green",
+      "confidence": "high",
+      "source_ids": [
+        "src-catalogue"
+      ],
+      "metric_ids": [],
+      "verification": "Check actual product records and photographs if the owner later grants access."
+    },
+    {
+      "id": "f-orders",
+      "title": "No orders in the supplied week",
+      "detail": "The second simulated export records zero orders across 67 sessions. Sessions increased from 42 in the previous complete week, but orders remain zero. Two small aggregate windows do not identify a cause or prove improvement in purchase outcomes.",
+      "kind": "observed",
+      "severity": "yellow",
+      "confidence": "high",
+      "source_ids": [
+        "src-shop"
+      ],
+      "metric_ids": [
+        "m-sessions",
+        "m-orders"
+      ],
+      "verification": "Obtain consistent session, product-view, add-to-cart and checkout data over additional complete windows."
+    },
+    {
+      "id": "f-budget",
+      "title": "Owner reports an immediate resource constraint",
+      "detail": "The scenario owner reports €90 monthly availability and difficulty paying the next subscription. The payment date, amount, cash position and unit economics are unknown; these limits should shape the scope of proposed work.",
+      "kind": "observed",
+      "severity": "red",
+      "confidence": "medium",
+      "source_ids": [
+        "src-owner"
+      ],
+      "metric_ids": [],
+      "verification": "Ask for the subscription amount and due date, current commitments and optional unit-cost information; do not infer affordability or recommend borrowing."
+    },
+    {
+      "id": "f-discovery",
+      "title": "Visibility may be limiting qualified visits",
+      "detail": "Four videos accumulated 410 supplied views while the store recorded 67 sessions. Both counts exceed the previous complete week, but session attribution and audience relevance remain unavailable. The counts do not establish that the copy draft or any action caused growth.",
+      "kind": "hypothesis",
+      "severity": "yellow",
+      "confidence": "low",
+      "source_ids": [
+        "src-instagram",
+        "src-shop"
+      ],
+      "metric_ids": [
+        "m-instagram-views",
+        "m-posts",
+        "m-sessions"
+      ],
+      "verification": "Inspect supplied content and audience fit, then obtain profile visits and tagged link clicks before diagnosing acquisition."
+    },
+    {
+      "id": "f-copy",
+      "title": "The supplied product excerpt leaves purchase questions open",
+      "detail": "A local copy draft now addresses the supplied material and fit facts. Measurements and dispatch timing are still absent, and the simulated storefront excerpt is unchanged. No publication or conversion effect is evidenced.",
+      "kind": "hypothesis",
+      "severity": "yellow",
+      "confidence": "medium",
+      "source_ids": [
+        "src-storefront",
+        "src-catalogue",
+        "src-copy-approval",
+        "src-copy-artifact"
+      ],
+      "metric_ids": [],
+      "verification": "Ask the owner for factual material and measurement details, inspect the complete page if access is authorized, then test revised copy."
+    },
+    {
+      "id": "f-checkout",
+      "title": "Checkout health is unknown",
+      "detail": "Checkout events and live account access are unavailable. No conclusion can be drawn about payment errors, abandoned checkouts or checkout usability; missing events must not be recorded as zero.",
+      "kind": "unknown",
+      "severity": "grey",
+      "confidence": "low",
+      "source_ids": [
+        "src-checkout"
+      ],
+      "metric_ids": [
+        "m-checkouts"
+      ],
+      "verification": "Request a read-only event export or permission for a non-purchasing checkout inspection."
+    },
+    {
+      "id": "f-margin",
+      "title": "Margins and production capacity are unknown",
+      "detail": "Product prices alone do not establish profitability. Material costs, labor time, fees, delivery costs and available units were not supplied.",
+      "kind": "unknown",
+      "severity": "grey",
+      "confidence": "low",
+      "source_ids": [
+        "src-catalogue",
+        "src-owner"
+      ],
+      "metric_ids": [],
+      "verification": "Request optional cost and capacity records, keeping personal financial data out of public reports."
+    },
+    {
+      "id": "f-benchmarks",
+      "title": "Real peer performance comparison is unavailable",
+      "detail": "No live market research or comparable real business data was collected. The synthetic card cannot establish an industry rate, a causal growth claim or a performance target.",
+      "kind": "unknown",
+      "severity": "grey",
+      "confidence": "low",
+      "source_ids": [
+        "src-benchmarks"
+      ],
+      "metric_ids": [],
+      "verification": "If research is later authorized and tools are available, collect dated peer evidence with matching definitions and document comparability limits."
+    },
+    {
+      "id": "f-draft",
+      "title": "One authorized local draft is evidenced",
+      "detail": "The fictional approval permits a local Dawn tee description draft, and a simulated artifact record contains that draft. This supports completion of the drafting task only; it does not establish publication, owner acceptance, improved traffic or sales.",
+      "kind": "observed",
+      "severity": "green",
+      "confidence": "high",
+      "source_ids": [
+        "src-copy-approval",
+        "src-copy-artifact"
+      ],
+      "metric_ids": [],
+      "verification": "If publication is later requested, obtain explicit authorization and verify the resulting store state separately."
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "b-synthetic",
+      "label": "Synthetic product-information comparison",
+      "source_ids": [
+        "src-comparator",
+        "src-storefront"
+      ],
+      "comparison": "The invented comparison card lists measurements, dispatch timing and contact information; these are absent from the supplied Atelier Solstice excerpt. This suggests questions to investigate, not a validated growth formula.",
+      "limitations": "Entirely synthetic comparator; no real outcome, causal evidence, market fit, comparable budget or complete storefront inspection.",
+      "simulated": true
+    }
+  ],
+  "actions": [
+    {
+      "id": "a-constraints",
+      "title": "Clarify the next subscription constraint",
+      "rationale": "An actionable plan needs a real deadline and available resources before introducing paid work.",
+      "finding_ids": [
+        "f-budget"
+      ],
+      "status": "proposed",
+      "cost": "Proposed: 10 minutes of owner input; no purchase.",
+      "expected_outcome": "A documented amount, due date and short-term time/budget limit, if the owner chooses to share them.",
+      "verification": "Record the owner's supplied values with their date and uncertainty.",
+      "authorization": null
+    },
+    {
+      "id": "a-copy",
+      "title": "Prepare factual Dawn tee product copy",
+      "rationale": "The supplied excerpt leaves material and fit questions unresolved. A factual draft is a small, reversible improvement to test.",
+      "finding_ids": [
+        "f-copy"
+      ],
+      "status": "completed",
+      "cost": "Proposed: 30 minutes; €0 external spend.",
+      "expected_outcome": "A reviewable copy draft based on owner-confirmed garment facts; no promised increase in orders.",
+      "verification": "Simulated draft content is recorded in src-copy-artifact at 2026-10-22T09:30:00Z and supports task completion only. Publication and business impact are unverified.",
+      "authorization": "SIMULATION ONLY: src-copy-approval, 2026-10-22T09:00:00Z; local draft creation only. This embedded record is fictional evidence, not current user authorization."
+    },
+    {
+      "id": "a-measure",
+      "title": "Request a limited funnel export",
+      "rationale": "Missing checkout and attribution data prevent distinguishing traffic and purchase-flow explanations.",
+      "finding_ids": [
+        "f-orders",
+        "f-discovery",
+        "f-checkout"
+      ],
+      "status": "proposed",
+      "cost": "Proposed: 20 minutes; no new paid software.",
+      "expected_outcome": "A dated export, or an explicit record that the requested metrics remain unavailable.",
+      "verification": "Confirm period boundaries and definitions; preserve missing values as unknown.",
+      "authorization": null
+    }
+  ],
+  "links": [
+    {
+      "from": "src-catalogue",
+      "to": "f-catalogue",
+      "relation": "supports"
+    },
+    {
+      "from": "m-orders",
+      "to": "f-orders",
+      "relation": "supports"
+    },
+    {
+      "from": "src-owner",
+      "to": "f-budget",
+      "relation": "supports_reported_constraint"
+    },
+    {
+      "from": "m-instagram-views",
+      "to": "f-discovery",
+      "relation": "motivates_hypothesis"
+    },
+    {
+      "from": "src-storefront",
+      "to": "f-copy",
+      "relation": "motivates_hypothesis"
+    },
+    {
+      "from": "src-checkout",
+      "to": "f-checkout",
+      "relation": "documents_unavailable_access"
+    },
+    {
+      "from": "b-synthetic",
+      "to": "f-copy",
+      "relation": "suggests_unvalidated_question"
+    },
+    {
+      "from": "f-budget",
+      "to": "a-constraints",
+      "relation": "motivates"
+    },
+    {
+      "from": "f-copy",
+      "to": "a-copy",
+      "relation": "motivates"
+    },
+    {
+      "from": "f-checkout",
+      "to": "a-measure",
+      "relation": "motivates"
+    },
+    {
+      "from": "src-copy-approval",
+      "to": "a-copy",
+      "relation": "fictionally_authorizes_local_draft_only"
+    },
+    {
+      "from": "src-copy-artifact",
+      "to": "a-copy",
+      "relation": "confirms_simulated_draft_creation"
+    },
+    {
+      "from": "src-copy-artifact",
+      "to": "f-draft",
+      "relation": "supports"
+    }
+  ]
+}

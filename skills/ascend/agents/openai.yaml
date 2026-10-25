@@ -1,0 +1,4 @@
+interface:
+  display_name: "ASCEND"
+  short_description: "Evidence-based project analysis and progress"
+  default_prompt: "Use $ascend to diagnose this project, investigate relevant evidence, and propose measurable improvements within the authorized scope."
