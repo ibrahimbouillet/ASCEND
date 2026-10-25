@@ -530,6 +530,179 @@ def export_payload(state):
             "generated_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")}
 
 
+def _context_items(items):
+    return {"items": items[:10], "total": len(items), "omitted": max(0, len(items) - 10)}
+
+
+def _context_fields(record, keys):
+    result = {}
+    for key in keys:
+        value = record[key]
+        if isinstance(value, str) and len(value) > 600:
+            value = value[:600] + " [truncated; inspect this record for full text]"
+        result[key] = _context_items(value) if isinstance(value, list) else value
+    return result
+
+
+def context_summary(workspace):
+    """Bounded current context; validate complete history without exporting it."""
+    state = load_state(workspace)
+    baseline, current = state["history"][0], state["history"][-1]
+    entries = state["manifest"]["snapshots"]
+    severity = {"red": 0, "yellow": 1, "grey": 2, "green": 3}
+    findings = sorted(current["findings"], key=lambda x: (severity[x["severity"]], x["id"]))
+    priorities = {x["id"]: severity[x["severity"]] for x in findings}
+    pending = sorted((x for x in current["actions"] if x["status"] not in {"completed", "cancelled"}),
+                     key=lambda x: (min((priorities[f] for f in x["finding_ids"]), default=4), x["id"]))
+    changes = {x["metric_id"]: x for x in metric_changes(baseline, current)}
+    baseline_metrics = {x["id"]: x for x in baseline["metrics"]}
+    metrics = []
+    for metric in current["metrics"]:
+        item = _context_fields(metric, ("id", "label", "value", "unit", "period_start", "period_end", "source_ids"))
+        item["baseline_comparison"] = _context_fields(changes[metric["id"]], tuple(changes[metric["id"]]))
+        previous = baseline_metrics.get(metric["id"])
+        item["baseline_measurement"] = _context_fields(previous, ("id", "value", "unit", "period_start", "period_end", "comparability_key")) if previous else None
+        metrics.append(item)
+    current_metric_ids = {m["id"] for m in current["metrics"]}
+    removed = [_context_fields(x, tuple(x)) for x in changes.values() if x["metric_id"] not in current_metric_ids]
+    actions = []
+    for action in pending:
+        item = _context_fields(action, ("id", "title", "status", "finding_ids", "cost", "verification"))
+        item["authorization"] = {"reference_present": action["authorization"] is not None,
+                                 "reference": _context_fields(action, ("authorization",))["authorization"],
+                                 "consent_verified_by_runtime": False}
+        actions.append(item)
+    status_counts = lambda rows: {status: sum(x["status"] == status for x in rows)
+                                 for status in sorted({x["status"] for x in rows})}
+    project = _context_fields(current["project"], ("id", "name", "domain", "summary", "objective", "constraints", "simulation"))
+    # Constraints also have bounded text, rather than only a bounded item count.
+    project["constraints"]["items"] = [x[:600] + (" [truncated]" if len(x) > 600 else "")
+                                        for x in project["constraints"]["items"]]
+    return {"schema_version": 1, "project": project,
+            "captures": {"count": len(entries), "baseline": {k: entries[0][k] for k in ("id", "captured_at")},
+                         "current": {k: entries[-1][k] for k in ("id", "captured_at")}},
+            "sources": {"counts_by_status": status_counts(current["sources"]),
+                        **_context_items([_context_fields(x, ("id", "title", "kind", "status")) for x in current["sources"]])},
+            "coverage": {"total": len(current["coverage"]), "counts_by_status": status_counts(current["coverage"]),
+                         "gaps": _context_items([_context_fields(x, ("area", "status", "source_ids", "note"))
+                                                 for x in current["coverage"] if x["status"] in {"partial", "unavailable"}])},
+            "metrics": _context_items(metrics), "removed_metric_comparisons": _context_items(removed),
+            "findings": _context_items([_context_fields(x, ("id", "title", "kind", "severity", "confidence", "source_ids", "metric_ids", "verification")) for x in findings]),
+            "pending_actions": _context_items(actions),
+            "pointers": {"inspect": "inspect --workspace <same workspace> --id <record ID>",
+                         "full_current": ".ascend/generations/" + state["pointer"]["generation"] + "/snapshot.json",
+                         "coverage": "Full current snapshot contains all declared coverage and omitted records."},
+            "next_decision": "Inspect priority findings and their evidence; resolve gaps before attributing causes. Confirm human authorization before changes.",
+            "limits": "Top 10 per list; text limited to 600 characters. Declared coverage is not proof of exhaustive access. Priority and confidence are separate. Changes do not establish causality."}
+
+
+def inspect_record(workspace, record_id):
+    """Read one current entity plus explicit edges, including typed references."""
+    state = load_state(workspace)
+    current = state["history"][-1]
+    records = {current["project"]["id"]: ("project", current["project"])}
+    for group in ("sources", "metrics", "findings", "benchmarks", "actions"):
+        records.update((x["id"], (group[:-1], x)) for x in current[group])
+    require(record_id in records, f"unknown current record ID: {record_id}")
+    edges = [(x["from"], x["to"], x["relation"]) for x in current["links"]]
+    for source_id, (_, record) in records.items():
+        for field in ("source_ids", "metric_ids", "finding_ids"):
+            edges.extend((source_id, target, field) for target in record.get(field, []))
+    neighbors, seen = [], set()
+    for left, right, relation in edges:
+        if record_id not in {left, right} or (left, right, relation) in seen:
+            continue
+        seen.add((left, right, relation))
+        target = right if left == record_id else left
+        kind, record = records[target]
+        label_key = next(key for key in ("title", "label", "name") if key in record)
+        neighbors.append({"id": target, "type": kind, "label": _context_fields(record, (label_key,))[label_key],
+                          "from": left, "to": right, "relation": relation})
+    for area in current["coverage"]:
+        if record_id in area["source_ids"]:
+            neighbors.append({"type": "coverage", "label": _context_fields(area, ("area",))["area"], "relation": "source_ids", "direction": "incoming"})
+    kind, record = records[record_id]
+    return {"schema_version": 1, "project_id": current["project"]["id"],
+            "capture": {k: state["manifest"]["snapshots"][-1][k] for k in ("id", "captured_at")},
+            "type": kind, "id": record_id, "content": record, "neighbors": neighbors,
+            "limits": "Current snapshot only. Links and references express recorded relationships, not verified support or causality."}
+
+
+def context_markdown(summary):
+    """Present the bounded verified summary without repeating JSON envelopes."""
+    def text(value):
+        value = str(value).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        value = re.sub(r"([\\`*{}\[\]()#_|])", r"\\\1", value)
+        return value.replace("\r\n", "\n").replace("\r", "\n").replace("\n", "<br>")
+
+    def scope(envelope):
+        return f"{len(envelope['items'])}/{envelope['total']} shown; {envelope['omitted']} omitted"
+
+    def references(envelope):
+        value = ", ".join(envelope["items"]) or "none recorded"
+        if envelope["omitted"]:
+            value += f"; {envelope['omitted']} omitted ({envelope['total']} total)"
+        return value
+
+    def value(number):
+        return "unknown" if number is None else str(number)
+
+    def counts(mapping):
+        return ", ".join(f"{key}: {count}" for key, count in mapping.items()) or "none recorded"
+
+    def table(headers, rows):
+        return ["| " + " | ".join(headers) + " |", "| " + " | ".join("---" for _ in headers) + " |",
+                *("| " + " | ".join(text(cell) for cell in row) + " |" for row in rows)]
+
+    project, captures = summary["project"], summary["captures"]
+    baseline, current = captures["baseline"], captures["current"]
+    lines = [f"# ASCEND context: {text(project['name'])}", "",
+             f"- Project: {text(project['id'])} | Domain: {text(project['domain'])} | Simulation: {str(project['simulation']).lower()} | Context schema: {summary['schema_version']}",
+             f"- Objective: {text(project['objective'])}", f"- Summary: {text(project['summary'])}",
+             f"- Constraints ({scope(project['constraints'])}): " + ("; ".join(text(x) for x in project["constraints"]["items"]) or "none recorded"), "",
+             f"- Baseline: {baseline['id']} at {baseline['captured_at']}",
+             f"- Current: {current['id']} at {current['captured_at']} | Captures: {captures['count']}", "",
+             "## Sources and coverage", "",
+             f"Sources ({scope(summary['sources'])}): {counts(summary['sources']['counts_by_status'])}", ""]
+    lines += table(("ID", "Status", "Kind", "Title"),
+                   ((x["id"], x["status"], x["kind"], x["title"]) for x in summary["sources"]["items"]))
+    coverage = summary["coverage"]
+    lines += ["", f"Coverage: {coverage['total']} declared areas; {counts(coverage['counts_by_status'])}",
+              f"Gaps ({scope(coverage['gaps'])}):", ""]
+    lines += [f"- {text(x['area'])}: {x['status']}; sources: {text(references(x['source_ids']))}; {text(x['note'])}"
+              for x in coverage["gaps"]["items"]] or ["- No gaps recorded; this does not establish complete coverage."]
+    lines += ["", f"## Metrics ({scope(summary['metrics'])})", ""]
+    metric_rows = []
+    for metric in summary["metrics"]["items"]:
+        previous, change = metric["baseline_measurement"], metric["baseline_comparison"]
+        before = "missing" if previous is None else (
+            f"{value(previous['value'])} {previous['unit']}; {previous['period_start']} to {previous['period_end']}; definition: {previous['comparability_key']}")
+        metric_rows.append((metric["id"], metric["label"], f"{value(metric['value'])} {metric['unit']}",
+                            f"{metric['period_start']} to {metric['period_end']}", before,
+                            f"delta {value(change['delta'])}; comparable: {str(change['comparable']).lower()}; {change['reason']}",
+                            references(metric["source_ids"])))
+    lines += table(("ID", "Metric", "Current", "Period", "Baseline", "Change", "Sources"), metric_rows)
+    removed = summary["removed_metric_comparisons"]
+    lines += ["", f"Removed metrics ({scope(removed)}):", ""]
+    lines += table(("ID", "Metric", "Before", "After", "Delta", "Comparable", "Reason"),
+                   ((x["metric_id"], x["label"], value(x["before"]), value(x["after"]), value(x["delta"]),
+                     str(x["comparable"]).lower(), x["reason"]) for x in removed["items"])) if removed["items"] else ["None recorded."]
+    lines += ["", f"## Findings by priority ({scope(summary['findings'])})", ""]
+    lines += table(("ID", "Finding", "Kind", "Priority", "Confidence", "Sources", "Metrics", "Verification"),
+                   ((x["id"], x["title"], x["kind"], x["severity"], x["confidence"], references(x["source_ids"]),
+                     references(x["metric_ids"]), x["verification"]) for x in summary["findings"]["items"]))
+    lines += ["", f"## Pending actions ({scope(summary['pending_actions'])})", "",
+              "Authorization references are declarations; the runtime does not prove human consent.", ""]
+    lines += table(("ID", "Action", "Status", "Findings", "Cost", "Authorization", "Verification"),
+                   ((x["id"], x["title"], x["status"], references(x["finding_ids"]), x["cost"],
+                     "declared: " + x["authorization"]["reference"] if x["authorization"]["reference_present"] else "none declared",
+                     x["verification"]) for x in summary["pending_actions"]["items"]))
+    lines += ["", "## Next decision and retrieval", "", summary["next_decision"], "",
+              f"Inspect: `{summary['pointers']['inspect']}`", f"Full current snapshot: `{summary['pointers']['full_current']}`",
+              summary["pointers"]["coverage"], "", summary["limits"]]
+    return "\n".join(lines)
+
+
 def html_safe_json(data):
     raw = json.dumps(data, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
     return raw.replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e").replace(
@@ -669,6 +842,12 @@ def main(argv=None):
         command.add_argument("--authorize-write", action="store_true")
     verify = sub.add_parser("verify", help="Read-only verification of all stored captures")
     verify.add_argument("--workspace", required=True)
+    summary = sub.add_parser("summary", help="Read-only bounded context for an assistant")
+    summary.add_argument("--workspace", required=True)
+    summary.add_argument("--format", choices=("json", "markdown"), default="json")
+    inspect = sub.add_parser("inspect", help="Read-only current record and explicit neighbors")
+    inspect.add_argument("--workspace", required=True)
+    inspect.add_argument("--id", required=True)
     report = sub.add_parser("render")
     report.add_argument("--workspace", required=True)
     report.add_argument("--authorize-write", action="store_true")
@@ -688,6 +867,11 @@ def main(argv=None):
         elif args.command == "verify":
             state = load_state(args.workspace)
             print(f"Verified {len(state['history'])} capture(s), including manifest ancestry and snapshot digests.")
+        elif args.command == "summary":
+            summary = context_summary(args.workspace)
+            print(context_markdown(summary) if args.format == "markdown" else json.dumps(summary, ensure_ascii=False, indent=2))
+        elif args.command == "inspect":
+            print(json.dumps(inspect_record(args.workspace, args.id), ensure_ascii=False, indent=2))
         elif args.command == "render":
             print(render(args.workspace, authorized=args.authorize_write))
         elif args.command == "serve":

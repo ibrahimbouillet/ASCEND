@@ -9,9 +9,9 @@ The shared `SKILL.md` uses the common name/description frontmatter and relative 
 | Codex | `.agents/skills/ascend/` | `~/.agents/skills/ascend/` |
 | Claude Code | `.claude/skills/ascend/` | `~/.claude/skills/ascend/` |
 
-Copy `skills/ascend/` as a complete folder. Do not copy the whole repository into a single skill folder. Installation, model/tool permissions, and host discovery must be checked in the actual host environment.
+Use the V1 installer described in [INSTALL.md](../INSTALL.md), or copy `skills/ascend/` as a complete folder. Do not copy the whole repository into a single skill folder. Filesystem installation, model/tool permissions, and native host execution are separate checks.
 
-Official documentation consulted on 2026-10-25: [OpenAI skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code skills](https://code.claude.com/docs/en/skills). Their plugin packaging and discovery rules can change. The current source tree is a standalone development skill, not a submitted marketplace plugin.
+Official documentation consulted on 2026-10-25: [OpenAI skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code skills](https://code.claude.com/docs/en/skills). Their discovery rules can change. V1 ships a versioned standalone skill and local installer, not a submitted marketplace plugin.
 
 ## Runtime
 
@@ -27,6 +27,6 @@ Integrity digests detect accidental changes relative to stored records. They are
 
 ## Validation status
 
-See [VALIDATION.md](VALIDATION.md) for checks actually executed. Structural compliance, local runtime tests, isolated agent behavior, native discovery, live integrations, and business impact are separate claims.
+See [VALIDATION_V1.md](VALIDATION_V1.md) and the earlier [VALIDATION.md](VALIDATION.md) for executed checks. Filesystem installation, local runtime, agent behavior, native discovery, live integrations, and business impact are separate claims.
 
 The native Codex CLI recognized the project-local skill in an isolated smoke attempt, but its execution policy denied the subsequent read commands. Full native use remains unverified. Claude Code's CLI was not found on PATH in this development environment.

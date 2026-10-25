@@ -1,6 +1,6 @@
 # Evidence data model and local runtime
 
-ASCEND v0.1 stores an explicit, dated account of a project. The runtime validates structure, links, and history integrity. It does **not** certify that a source is truthful, that a claim is supported by the content of that source, that an authorization string records real consent, or that an action worked. The assistant and human reviewer remain responsible for those judgments.
+ASCEND V1 stores an explicit, dated account of a project using `schema_version: 1`. The runtime validates structure, links, and history integrity. It does **not** certify that a source is truthful, that a claim is supported by the content of that source, that an authorization string records real consent, or that an action worked. The assistant and human reviewer remain responsible for those judgments.
 
 ## Input snapshot
 
@@ -104,11 +104,26 @@ python skills/ascend/scripts/ascend.py validate evidence.json
 python skills/ascend/scripts/ascend.py init evidence.json --workspace ./project-state --actor "Claude Code" --authorize-write
 python skills/ascend/scripts/ascend.py capture followup.json --workspace ./project-state --actor "Codex" --authorize-write
 python skills/ascend/scripts/ascend.py verify --workspace ./project-state
+python skills/ascend/scripts/ascend.py summary --workspace ./project-state
+python skills/ascend/scripts/ascend.py summary --workspace ./project-state --format markdown
+python skills/ascend/scripts/ascend.py inspect --workspace ./project-state --id finding-example
 python skills/ascend/scripts/ascend.py render --workspace ./project-state --authorize-write
 python skills/ascend/scripts/ascend.py serve --workspace ./project-state --port 8765
 ```
 
-`validate` and `verify` are read-only. Inputs are validated before the runtime creates or changes state. Missing write acknowledgement, invalid input, invalid chronology, and a corrupted store prevent writes. Validation exits 0 on success and 2 on rejected input or an I/O error. `serve` blocks until interrupted and prints the actual port; port 0 selects a free local port for tests. No command runs source code, shells, external connectors, installs packages, creates Git commits, or changes a business system.
+`validate`, `verify`, `summary`, and `inspect` are read-only. Inputs are validated before the runtime creates or changes state. Missing write acknowledgement, invalid input, invalid chronology, and a corrupted store prevent writes. Validation exits 0 on success and 2 on rejected input or an I/O error. `serve` blocks until interrupted and prints the actual port; port 0 selects a free local port for tests. No command runs source code, shells, external connectors, installs packages, creates Git commits, or changes a business system.
+
+### Assistant context retrieval
+
+Resume a project with `summary`, then use `inspect --id <ID>` for the records needed to answer the current question. Both commands call the same full ancestry and digest verification as `verify`, scope their reads to the named workspace, and create no files, directories, or locks. Missing workspaces, corrupt histories, and unknown current IDs exit 2 without partial context output.
+
+`summary` returns JSON by default. Use `--format markdown` for compact readable sections and tables presenting the same bounded facts without JSON envelopes: actual periods, comparison reasons, explicit unknown values, priority separate from confidence, declared authorization, and counts of shown and omitted records. Text originating in project records is escaped for Markdown tables. The JSON response `schema_version: 1` is separate from the snapshot schema. It includes project identity, objective, constraints, domain, simulation marker, baseline/current capture IDs and timestamps, source and coverage status counts, coverage gaps, current metrics with measurement periods and baseline comparison reasons, prioritized findings, pending actions with declared authorization status, and context pointers. It excludes full snapshots, source contents, and historical records. A missing or empty coverage declaration does not mean the project was exhaustively examined. Source counts and the simulation flag remain supplied declarations.
+
+List envelopes use `{"items": [...], "total": N, "omitted": M}`. Each includes at most 10 items; this also applies to nested source, metric, and finding reference lists and project constraints. Summary text fields are capped at 600 characters with a visible truncation marker. Full current record details are available through `inspect`; the summary points to the verified current snapshot for complete declared coverage and omitted IDs. Findings sort by severity (red, yellow, grey, green), then ID. Pending actions exclude completed and cancelled entries and sort by the highest priority of their referenced findings, then ID. Confidence remains a separate field and does not change this order. These are deterministic presentation rules, not a causal diagnosis or an urgency score computed from the business.
+
+Current metrics retain actual periods, units, IDs, source references, baseline measurement metadata, and the existing structural comparison result. Removed metric comparisons are shown separately. Unknown values remain null; missing or incompatible metrics keep explicit reasons. Authorization references indicate only what the snapshot declares; `consent_verified_by_runtime` is always false. The assistant must still establish actual consent from the conversation.
+
+`inspect` returns one current record's type, ID, complete content, current capture identity, and explicit linked neighbors with minimal labels. It supports project, source, metric, finding, benchmark, and action IDs. In addition to `links`, it exposes incoming and outgoing `source_ids`, `metric_ids`, and `finding_ids` references, and incoming coverage source references, even when `links` is empty. Relationships remain recorded relationships; the command neither invents edges nor certifies evidentiary support. Historical-only IDs are unknown in this interface. `inspect` intentionally includes full requested content and neighbors; select IDs from the bounded summary before retrieving details.
 
 ## Dashboard export and server boundary
 

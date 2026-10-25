@@ -1,4 +1,4 @@
-# Architecture: v0.1 development preview
+# Architecture: ASCEND V1
 
 ## Components
 
@@ -6,6 +6,8 @@
 - **Structured captures:** dated project context, sources, coverage, measures, findings, comparisons, actions, and typed links using stable identifiers.
 - **Local helper:** validation, baseline initialization, later captures, integrity checking, dashboard rendering, and loopback serving.
 - **Dashboard:** a derived read-only view with source evidence, graph navigation, audit filters, action state, and compatible history.
+- **Context:** bounded read-only summaries and targeted linked-record inspection for agent handoff.
+- **Distribution:** versioned, allowlisted ZIP with a manifest, checksum verification, and host-aware installation that preserves existing content and upgrade backups.
 
 The agent investigates and reasons. The helper validates structure and stores curated records. The dashboard displays those records. None of these components establishes source authenticity or commercial causality automatically.
 
@@ -35,6 +37,6 @@ Project records and source material are treated as untrusted data. Dashboard val
 
 ## Deliberate initial limits
 
-The first version uses a compact JSON record model instead of a database or hosted service. There is no autonomous collector, remote account synchronization, scheduling, multilingual UI, or marketplace installer. Connectors are used by the host agent when available; benchmark sources must be investigated rather than synthesized by the helper.
+V1 uses a JSON record model for local histories. There is no autonomous collector, remote account synchronization, scheduling, multilingual UI, or marketplace installer. Connectors are used by the host agent when available; benchmark sources must be investigated rather than synthesized by the helper. The packaged installer supports standalone skills in Codex and Claude Code locations.
 
 These limits keep the first pilot inspectable. Future work should be selected from observed failures and real user workflows, including native Claude Code and Codex runs, domain-specific evaluation sets, and a controlled real-project pilot.

@@ -1,6 +1,9 @@
 ---
 name: ascend
 description: Analyze a project's current state, investigate evidence and relevant benchmarks, prioritize improvements, and track authorized changes against a dated baseline. Use for a project diagnosis, evidence-based improvement strategy, or recurring progress review across business, software, learning, and research projects. A narrow edit or isolated factual question does not need a full project audit.
+license: MIT
+metadata:
+  version: "1.0.0"
 ---
 
 # ASCEND
@@ -32,10 +35,14 @@ Explain the local files to be created and obtain write authorization unless it i
 
 Save a dated initial snapshot, source references, coverage, metrics, findings, and proposed actions. Minimize retained sensitive data; aggregate customer data where possible. Use the structured IDs and relations to connect evidence, findings, and actions. Keep the baseline immutable. Read a summary and index first on later sessions, then retrieve relevant records and refresh material evidence rather than assuming it is current.
 
+For an existing workspace, run `summary --format markdown` first and use `inspect` to retrieve relevant records and their relationships. Summary lists are bounded and explicitly report omissions; retrieve details before deciding a missing entry does not exist. Avoid loading the full history by default. A summary of old sources does not establish that the live project is unchanged.
+
 The optional standard-library helper is located at `scripts/ascend.py`, relative to this skill. Use `python` or the environment's available Python 3.11+ executable. It stores snapshots and renders a local dashboard; it does not collect data, perform research, execute project actions, enforce human consent, or validate that claims are true. The `--authorize-write` flag acknowledges an actual authorization already obtained; it never supplies that authorization itself.
 
 ```text
 python <skill-dir>/scripts/ascend.py validate <snapshot.json>
+python <skill-dir>/scripts/ascend.py summary --workspace <project-workspace>
+python <skill-dir>/scripts/ascend.py inspect --workspace <project-workspace> --id <record-id>
 python <skill-dir>/scripts/ascend.py init <snapshot.json> --workspace <project-workspace> --actor <agent-name> --authorize-write
 python <skill-dir>/scripts/ascend.py capture <snapshot.json> --workspace <project-workspace> --actor <agent-name> --authorize-write
 python <skill-dir>/scripts/ascend.py render --workspace <project-workspace> --authorize-write
